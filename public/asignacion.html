@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bidones | Asignacion</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <h1>Bidones</h1>
+          <p>Elegi rapido quien lleva hoy</p>
+        </div>
+        <div class="group-box">
+          <label for="groupSelect">Grupo</label>
+          <select id="groupSelect"></select>
+        </div>
+      </header>
+
+      <nav class="nav">
+        <a href="/asignacion">Asignacion</a>
+        <a href="/grupos">Grupos</a>
+        <a href="/plantel">Plantel</a>
+        <a href="/historial">Historial</a>
+      </nav>
+
+      <div id="notice" class="notice"></div>
+
+      <section class="grid">
+        <article class="card cols-8">
+          <h2>Lista del dia</h2>
+          <label for="dateInput">Fecha</label>
+          <input id="dateInput" type="date" />
+          <label for="listInput">Pega lista de WhatsApp</label>
+          <textarea id="listInput" rows="14" placeholder="Complejo hoy 20h&#10;1. Mika&#10;2. Oso"></textarea>
+          <div class="row">
+            <button id="btnPick" type="button">Elegir quien lleva bidones</button>
+          </div>
+        </article>
+
+        <article class="card cols-4">
+          <h2>Resultado</h2>
+          <div id="resultName" class="result-name"></div>
+          <label for="resultMessage">Mensaje</label>
+          <textarea id="resultMessage" rows="4" readonly></textarea>
+          <button id="btnCopy" type="button" class="ghost">Copiar mensaje</button>
+          <p class="muted">Si hay nombres sin mapear, aparecen arriba como alerta.</p>
+        </article>
+      </section>
+    </main>
+    <script src="/common.js"></script>
+    <script src="/asignacion.js"></script>
+  </body>
+</html>

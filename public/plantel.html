@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bidones | Plantel</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <h1>Bidones</h1>
+          <p>Gestiona grupos, jugadores y aliases</p>
+        </div>
+        <div class="group-box">
+          <label for="groupSelect">Grupo</label>
+          <select id="groupSelect"></select>
+        </div>
+      </header>
+
+      <nav class="nav">
+        <a href="/asignacion">Asignacion</a>
+        <a href="/grupos">Grupos</a>
+        <a href="/plantel">Plantel</a>
+        <a href="/historial">Historial</a>
+      </nav>
+
+      <div id="notice" class="notice"></div>
+
+      <section class="grid">
+        <article class="card cols-6">
+          <h2>Agregar jugador</h2>
+          <label for="newPlayerInput">Nombre canónico</label>
+          <input id="newPlayerInput" type="text" />
+          <button id="btnAddPlayer" type="button">Agregar</button>
+        </article>
+
+        <article class="card cols-6">
+          <h2>Agregar alias</h2>
+          <label for="aliasPlayerSelect">Jugador</label>
+          <select id="aliasPlayerSelect"></select>
+          <label for="newAliasInput">Alias</label>
+          <input id="newAliasInput" type="text" />
+          <button id="btnAddAlias" type="button">Agregar alias</button>
+        </article>
+
+        <article class="card cols-12">
+          <h2>Jugadores del grupo</h2>
+          <ul id="players" class="list"></ul>
+        </article>
+      </section>
+    </main>
+    <script src="/common.js"></script>
+    <script src="/plantel.js"></script>
+  </body>
+</html>

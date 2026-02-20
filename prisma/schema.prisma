@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id            Int        @id @default(autoincrement())
+  teamId        Int        @map("team_id")
+  canonicalName String     @map("canonical_name")
+  active        Boolean    @default(true)
+  team          Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  aliases       Alias[]
+  carryLogs     CarryLog[]
+
+  @@unique([teamId, canonicalName])
+  @@index([teamId])
+  @@map("players")
+}
+
+model Alias {
+  id              Int    @id @default(autoincrement())
+  teamId          Int    @map("team_id")
+  playerId        Int    @map("player_id")
+  aliasNormalized String @map("alias_normalized")
+  team            Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  player          Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, aliasNormalized])
+  @@index([teamId])
+  @@index([playerId])
+  @@map("aliases")
+}
+
+model CarryLog {
+  id          Int      @id @default(autoincrement())
+  teamId      Int      @map("team_id")
+  date        String
+  playerId    Int      @map("player_id")
+  rawListText String   @map("raw_list_text")
+  createdAt   DateTime @default(now()) @map("created_at")
+  team        Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Restrict)
+
+  @@unique([teamId, date])
+  @@index([teamId])
+  @@index([playerId])
+  @@map("carry_log")
+}
+
+model Team {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  active    Boolean   @default(true)
+  players   Player[]
+  aliases   Alias[]
+  carryLogs CarryLog[]
+
+  @@map("teams")
+}

@@ -1,0 +1,41 @@
+{
+  "name": "bidones",
+  "version": "1.0.0",
+  "description": "CLI para asignar quien lleva bidones en un equipo de futbol",
+  "main": "dist/cli.js",
+  "bin": {
+    "bidones": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts",
+    "app": "tsx src/server.ts",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy"
+  },
+  "keywords": [
+    "cli",
+    "futbol",
+    "sqlite",
+    "prisma",
+    "typescript"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^6.3.0",
+    "commander": "^12.1.0",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "prisma": "^6.3.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.2",
+    "vitest": "^2.1.8"
+  }
+}

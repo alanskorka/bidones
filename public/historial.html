@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bidones | Historial</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <h1>Bidones</h1>
+          <p>Historial y edicion manual</p>
+        </div>
+        <div class="group-box">
+          <label for="groupSelect">Grupo</label>
+          <select id="groupSelect"></select>
+        </div>
+      </header>
+
+      <nav class="nav">
+        <a href="/asignacion">Asignacion</a>
+        <a href="/grupos">Grupos</a>
+        <a href="/plantel">Plantel</a>
+        <a href="/historial">Historial</a>
+      </nav>
+
+      <div id="notice" class="notice"></div>
+
+      <section class="grid">
+        <article class="card cols-12">
+          <h2>Historial del grupo</h2>
+          <button id="btnRefresh" type="button" class="ghost">Actualizar</button>
+          <ul id="history" class="list"></ul>
+        </article>
+      </section>
+    </main>
+    <script src="/common.js"></script>
+    <script src="/historial.js"></script>
+  </body>
+</html>
