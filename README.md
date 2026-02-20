@@ -6,7 +6,7 @@ App web para asignar quien lleva bidones por grupo.
 
 - Node.js 20+
 - npm
-- Base PostgreSQL (recomendado: Neon free)
+- Base PostgreSQL (recomendado: Supabase Free)
 
 ## Instalacion local
 
@@ -37,14 +37,14 @@ App web para asignar quien lleva bidones por grupo.
 - La primera linea no vacia se ignora siempre.
 - Se normaliza texto y numeraciones comunes.
 
-## Deploy gratis (Neon + Render)
+## Deploy gratis (Supabase + Render)
 
-### 1) Crear base gratis en Neon
+### 1) Crear base gratis en Supabase
 
-1. Crear cuenta en Neon.
-2. Crear proyecto.
-3. Copiar `Connection string` (pooled).
-4. Verificar que tenga `sslmode=require`.
+1. Crear cuenta en Supabase.
+2. Crear proyecto (plan Free).
+3. Copiar `Connection string` de Postgres desde `Connect`.
+4. Usar preferentemente pooler para conexiones desde servicios web.
 
 ### 2) Crear web service gratis en Render
 
@@ -56,7 +56,7 @@ App web para asignar quien lleva bidones por grupo.
    - Branch: `main` (o la rama de deploy)
 5. Variables de entorno:
    - `PORT=3030`
-   - `DATABASE_URL=<tu_connection_string_de_neon>`
+   - `DATABASE_URL=<tu_connection_string_de_supabase>`
 6. Deploy.
 
 ### 3) Verificacion
@@ -71,4 +71,3 @@ Abrir:
 - `npm run start`: ejecutar compilado
 - `npm run test`: tests
 - `npm run prisma:deploy`: sincroniza esquema (`prisma db push`)
-
