@@ -1,26 +1,28 @@
 # Bidones
 
-App web para asignar quien lleva bidones por grupo/equipo.
+App web para asignar quien lleva bidones por grupo.
 
 ## Requisitos
 
 - Node.js 20+
 - npm
+- Base PostgreSQL (recomendado: Neon free)
 
 ## Instalacion local
 
-1. Copiar variables de entorno:
+1. Copiar variables:
    - Windows: `copy .env.example .env`
    - macOS/Linux: `cp .env.example .env`
-2. Instalar dependencias:
+2. Editar `.env` y definir `DATABASE_URL` de PostgreSQL.
+3. Instalar dependencias:
    - `npm install`
-3. Generar Prisma Client:
+4. Generar Prisma Client:
    - `npm run prisma:generate`
-4. Aplicar migraciones:
+5. Inicializar esquema:
    - `npm run dev -- init`
-5. Levantar la app:
+6. Levantar app:
    - `npm run app`
-6. Abrir:
+7. Abrir:
    - `http://localhost:3030/asignacion`
 
 ## Pantallas
@@ -30,37 +32,43 @@ App web para asignar quien lleva bidones por grupo/equipo.
 - `/plantel`: agregar alias/jugadores, activar/desactivar y borrar jugador
 - `/historial`: ver historial y borrar registros
 
-## Regla de parseo de lista
+## Regla de parseo
 
-- La primera linea no vacia siempre se ignora.
-- Se ignoran lineas vacias y encabezados tipicos.
-- Se normaliza texto (lowercase, sin tildes, espacios colapsados, numeraciones iniciales comunes).
+- La primera linea no vacia se ignora siempre.
+- Se normaliza texto y numeraciones comunes.
 
-## Publicar en internet (deploy)
+## Deploy gratis (Neon + Render)
 
-El repo ya queda preparado para deploy con Docker.
+### 1) Crear base gratis en Neon
 
-### Opcion recomendada: Render (Web Service con Docker)
+1. Crear cuenta en Neon.
+2. Crear proyecto.
+3. Copiar `Connection string` (pooled).
+4. Verificar que tenga `sslmode=require`.
+
+### 2) Crear web service gratis en Render
 
 1. Subir este repo a GitHub.
-2. En Render: New + Web Service + conectar repo.
-3. Runtime: Docker.
-4. Variables:
+2. En Render: `New` -> `Web Service`.
+3. Conectar repo.
+4. Configuracion:
+   - Runtime: `Docker`
+   - Branch: `main` (o la rama de deploy)
+5. Variables de entorno:
    - `PORT=3030`
-   - `DATABASE_URL=file:./dev.db`
-5. Montar un disco persistente en `/app/prisma` para que SQLite no se pierda.
+   - `DATABASE_URL=<tu_connection_string_de_neon>`
 6. Deploy.
 
-La app quedara publica con URL HTTPS de Render.
+### 3) Verificacion
+
+Abrir:
+- `https://TU-SERVICIO.onrender.com/asignacion`
 
 ## Scripts
 
-- `npm run app`: ejecutar servidor web en desarrollo
+- `npm run app`: servidor web en desarrollo
 - `npm run build`: compilar TypeScript
-- `npm run start`: ejecutar servidor compilado
+- `npm run start`: ejecutar compilado
 - `npm run test`: tests
+- `npm run prisma:deploy`: sincroniza esquema (`prisma db push`)
 
-## Nota sobre borrado
-
-- No se puede borrar el ultimo grupo.
-- No se puede borrar un jugador si tiene historial; primero hay que borrar sus registros de historial.

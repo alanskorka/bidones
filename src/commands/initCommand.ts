@@ -14,7 +14,7 @@ async function fileExists(filePath: string): Promise<boolean> {
 
 export async function initCommand(): Promise<void> {
   const prismaCliPath = path.join(process.cwd(), "node_modules", "prisma", "build", "index.js");
-  const result = spawnSync(process.execPath, [prismaCliPath, "migrate", "deploy"], {
+  const result = spawnSync(process.execPath, [prismaCliPath, "db", "push"], {
     cwd: process.cwd(),
     encoding: "utf8"
   });
@@ -23,7 +23,7 @@ export async function initCommand(): Promise<void> {
     const stderr = (result.stderr ?? "").toString().trim();
     const stdout = (result.stdout ?? "").toString().trim();
     const details = stderr || stdout || result.error?.message || "Sin detalle";
-    throw new Error(`No se pudieron aplicar las migraciones. ${details}`);
+    throw new Error(`No se pudo sincronizar el esquema de base de datos. ${details}`);
   }
 
   const dataDir = path.join(process.cwd(), "data");
