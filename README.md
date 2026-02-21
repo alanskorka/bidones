@@ -1,66 +1,60 @@
 # Bidones
 
-App web para asignar quien lleva bidones por grupo/equipo.
+Version local estable de la app para asignar quien lleva bidones por grupo.
 
 ## Requisitos
 
 - Node.js 20+
 - npm
 
-## Instalacion local
+## Levantar en localhost (paso a paso)
 
-1. Copiar variables de entorno:
+1. Ir a la carpeta del proyecto:
+   - `cd c:\Alan\bidones`
+2. Copiar variables de entorno:
    - Windows: `copy .env.example .env`
-   - macOS/Linux: `cp .env.example .env`
-2. Instalar dependencias:
-   - `npm install`
-3. Generar Prisma Client:
-   - `npm run prisma:generate`
-4. Aplicar migraciones:
-   - `npm run dev -- init`
-5. Levantar la app:
-   - `npm run app`
-6. Abrir:
+3. Instalar dependencias:
+   - `npm.cmd install`
+4. Generar cliente Prisma:
+   - `npm.cmd run prisma:generate`
+5. Crear/actualizar estructura de base de datos:
+   - `npm.cmd run dev -- init`
+6. Levantar app:
+   - `npm.cmd run app`
+7. Abrir en navegador:
    - `http://localhost:3030/asignacion`
 
 ## Pantallas
 
-- `/asignacion`: pegar lista y obtener el elegido
+- `/asignacion`: pegar lista y elegir
 - `/grupos`: crear, seleccionar y borrar grupos
 - `/plantel`: agregar alias/jugadores, activar/desactivar y borrar jugador
-- `/historial`: ver historial y borrar registros
+- `/historial`: ver y borrar registros
 
-## Regla de parseo de lista
+## Base de datos local
 
-- La primera linea no vacia siempre se ignora.
-- Se ignoran lineas vacias y encabezados tipicos.
-- Se normaliza texto (lowercase, sin tildes, espacios colapsados, numeraciones iniciales comunes).
+- Motor: SQLite
+- Archivo: `c:\Alan\bidones\prisma\dev.db`
 
-## Publicar en internet (deploy)
+## Ver la base de datos
 
-El repo ya queda preparado para deploy con Docker.
+### Opcion recomendada: Prisma Studio
 
-### Opcion recomendada: Render (Web Service con Docker)
+1. En otra terminal:
+   - `cd c:\Alan\bidones`
+   - `npm.cmd run db:studio`
+2. Se abre una UI web con las tablas:
+   - `teams`
+   - `players`
+   - `aliases`
+   - `carry_log`
 
-1. Subir este repo a GitHub.
-2. En Render: New + Web Service + conectar repo.
-3. Runtime: Docker.
-4. Variables:
-   - `PORT=3030`
-   - `DATABASE_URL=file:./dev.db`
-5. Montar un disco persistente en `/app/prisma` para que SQLite no se pierda.
-6. Deploy.
+### Opcion alternativa: DB Browser for SQLite
 
-La app quedara publica con URL HTTPS de Render.
+- Abrir el archivo `prisma/dev.db` con DB Browser for SQLite.
 
-## Scripts
+## Notas
 
-- `npm run app`: ejecutar servidor web en desarrollo
-- `npm run build`: compilar TypeScript
-- `npm run start`: ejecutar servidor compilado
-- `npm run test`: tests
+- La primera linea no vacia de la lista se ignora siempre.
+- Si el puerto 3030 esta ocupado, `iniciar_bidones.bat` cierra el proceso previo y vuelve a arrancar.
 
-## Nota sobre borrado
-
-- No se puede borrar el ultimo grupo.
-- No se puede borrar un jugador si tiene historial; primero hay que borrar sus registros de historial.

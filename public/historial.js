@@ -46,16 +46,6 @@
     }
   }
 
-  document.getElementById("btnRefresh").addEventListener("click", async () => {
-    clearNotice();
-    try {
-      await loadHistory();
-      showNotice("Historial actualizado.");
-    } catch (err) {
-      showNotice(err.error || "No se pudo actualizar.", "error");
-    }
-  });
-
   async function boot() {
     markActiveNav();
     try {
@@ -69,4 +59,3 @@
 
   boot();
 })();
-
