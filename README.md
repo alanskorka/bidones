@@ -53,7 +53,6 @@ App web para asignar quien lleva bidones por grupo.
 3. Importar repo y elegir la rama `web-free-deploy`.
 4. En `Environment Variables` agregar:
    - `DATABASE_URL=<pooler_url:6543 con pgbouncer=true>`
-   - `DIRECT_URL=<direct_url:5432>`
 5. Deploy.
 
 ### 3) Verificacion
