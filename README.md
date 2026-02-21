@@ -37,7 +37,7 @@ App web para asignar quien lleva bidones por grupo.
 - La primera linea no vacia se ignora siempre.
 - Se normaliza texto y numeraciones comunes.
 
-## Deploy gratis (Supabase + Render)
+## Deploy gratis (Supabase + Vercel)
 
 ### 1) Crear base gratis en Supabase
 
@@ -46,23 +46,19 @@ App web para asignar quien lleva bidones por grupo.
 3. Copiar `Connection string` de Postgres desde `Connect`.
 4. Usar preferentemente pooler para conexiones desde servicios web.
 
-### 2) Crear web service gratis en Render
+### 2) Deploy en Vercel
 
 1. Subir este repo a GitHub.
-2. En Render: `New` -> `Web Service`.
-3. Conectar repo.
-4. Configuracion:
-   - Runtime: `Docker`
-   - Branch: `main` (o la rama de deploy)
-5. Variables de entorno:
-   - `PORT=3030`
+2. En Vercel: `Add New...` -> `Project`.
+3. Importar repo y elegir la rama `web-free-deploy`.
+4. En `Environment Variables` agregar:
    - `DATABASE_URL=<tu_connection_string_de_supabase>`
-6. Deploy.
+5. Deploy.
 
 ### 3) Verificacion
 
 Abrir:
-- `https://TU-SERVICIO.onrender.com/asignacion`
+- `https://TU-PROYECTO.vercel.app/asignacion`
 
 ## Scripts
 
