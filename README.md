@@ -52,7 +52,8 @@ App web para asignar quien lleva bidones por grupo.
 2. En Vercel: `Add New...` -> `Project`.
 3. Importar repo y elegir la rama `web-free-deploy`.
 4. En `Environment Variables` agregar:
-   - `DATABASE_URL=<tu_connection_string_de_supabase>`
+   - `DATABASE_URL=<pooler_url:6543 con pgbouncer=true>`
+   - `DIRECT_URL=<direct_url:5432>`
 5. Deploy.
 
 ### 3) Verificacion

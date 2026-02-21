@@ -13,4 +13,4 @@ RUN npm run build
 
 EXPOSE 3030
 
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npm run prisma:deploy && npm run start"]
