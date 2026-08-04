@@ -1,12 +1,34 @@
 {
+  "teamName": "Hebraica",
   "players": [
-    {
-      "canonicalName": "Federico G",
-      "aliases": ["Fede", "Federico", "Federico G"]
-    },
-    {
-      "canonicalName": "Nicolas P",
-      "aliases": ["Nico", "Nicolas", "Nicolas P"]
-    }
+    { "canonicalName": "Mika", "aliases": ["Mika"] },
+    { "canonicalName": "Oso", "aliases": ["Oso"] },
+    { "canonicalName": "Chiqui", "aliases": ["Chiqui", "Chico"] },
+    { "canonicalName": "Marce", "aliases": ["Marce"] },
+    { "canonicalName": "Loco", "aliases": ["Loco", "Degen"] },
+    { "canonicalName": "Fino", "aliases": ["Fino"] },
+    { "canonicalName": "Ioni", "aliases": ["Ioni"] },
+    { "canonicalName": "Gato", "aliases": ["Gato"] },
+    { "canonicalName": "Joaco", "aliases": ["Joaco"] },
+    { "canonicalName": "Bocha", "aliases": ["Bocha"] },
+    { "canonicalName": "Hugo", "aliases": ["Hugo"] },
+    { "canonicalName": "Gordo", "aliases": ["Gordo"] },
+    { "canonicalName": "Javi", "aliases": ["Javi"] },
+    { "canonicalName": "Ake", "aliases": ["Ake"] },
+    { "canonicalName": "Oldak", "aliases": ["Oldak"] },
+    { "canonicalName": "Suizo", "aliases": ["Suizo"] },
+    { "canonicalName": "Mato", "aliases": ["Mato"] },
+    { "canonicalName": "Lucas", "aliases": ["Lucas"] },
+    { "canonicalName": "Givo", "aliases": ["Givo"] },
+    { "canonicalName": "Mauri", "aliases": ["Mauri"] },
+    { "canonicalName": "Wilder", "aliases": ["Wilder"] },
+    { "canonicalName": "Colo", "aliases": ["Colo"] },
+    { "canonicalName": "Tommy", "aliases": ["Tommy"] },
+    { "canonicalName": "Nuri", "aliases": ["Nuri", "Nuriel"] },
+    { "canonicalName": "Juanpe", "aliases": ["Juanpe"] },
+    { "canonicalName": "Ruso", "aliases": ["Ruso"] },
+    { "canonicalName": "Ary", "aliases": ["Ary"], "active": false },
+    { "canonicalName": "Nico", "aliases": ["Nico"], "active": false },
+    { "canonicalName": "Tuti", "aliases": ["Tuti"], "active": false }
   ]
 }

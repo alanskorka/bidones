@@ -37,4 +37,7 @@ export async function pickCommand(params: {
 
   console.log(`Elegido: ${result.selectedName}`);
   console.log(result.message);
+  if (process.env.BIDONES_DEBUG_SELECTION === "1" && "selectionDebug" in result) {
+    console.log(JSON.stringify(result.selectionDebug, null, 2));
+  }
 }

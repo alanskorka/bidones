@@ -85,34 +85,43 @@ async function pickForGroup(groupId: number, date: string, listText: string) {
       return true;
     });
 
-  const { selected } = await pickCarrier(attendees, {
+  const selection = await pickCarrier(attendees, {
+    alias: {
+      findMany: async () =>
+        prisma.alias.findMany({
+          where: { teamId: groupId },
+          include: { player: true }
+        })
+    },
     carryLog: {
-      groupBy: async () =>
-        prisma.carryLog.groupBy({
-          by: ["playerId"],
+      findMany: async (args: { where: { teamId: number; date?: { lt?: string } } }) =>
+        prisma.carryLog.findMany({
           where: {
             teamId: groupId,
-            playerId: { in: attendees.map((a) => a.id) }
+            ...(args.where.date?.lt ? { date: { lt: args.where.date.lt } } : {})
           },
-          _count: { _all: true },
-          _max: { date: true }
-        } as any)
+          orderBy: [{ date: "asc" }, { createdAt: "asc" }]
+        })
     }
+  }, {
+    teamId: groupId,
+    currentDate: date
   });
 
   await prisma.carryLog.create({
     data: {
       teamId: groupId,
       date,
-      playerId: selected.id,
+      playerId: selection.selected.id,
       rawListText: listText
     }
   });
 
   return {
     ok: true as const,
-    selectedName: selected.canonicalName,
-    message: renderMessage(selected.canonicalName)
+    selectedName: selection.selected.canonicalName,
+    message: renderMessage(selection.selected.canonicalName),
+    selectionDebug: selection.stats
   };
 }
 
@@ -350,7 +359,8 @@ app.post("/api/pick", async (req: Request, res: Response) => {
     res.json({
       ok: true,
       selectedName: result.selectedName,
-      message: result.message
+      message: result.message,
+      selectionDebug: result.selectionDebug
     });
   } catch (error) {
     if (

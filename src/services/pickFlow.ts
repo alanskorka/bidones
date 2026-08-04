@@ -4,7 +4,12 @@ import { renderMessage } from "../renderMessage";
 import { DEFAULT_TEAM_NAME, ensureTeam } from "../db";
 
 export type PickFlowResult =
-  | { ok: true; selectedName: string; message: string }
+  | {
+      ok: true;
+      selectedName: string;
+      message: string;
+      selectionDebug: unknown;
+    }
   | { ok: false; reason: "unresolved"; unresolvedNames: string[] }
   | { ok: false; reason: "empty-list" };
 
@@ -58,31 +63,42 @@ export async function executePickFlow(params: {
       canonicalName: player.canonicalName
     }));
 
-  const { selected } = await pickCarrier(attendees, {
+  const selection = await pickCarrier(attendees, {
+    alias: {
+      findMany: async () =>
+        params.prisma.alias.findMany({
+          where: { teamId: team.id },
+          include: { player: true }
+        })
+    },
     carryLog: {
-      groupBy: async () =>
-        params.prisma.carryLog.groupBy({
-          by: ["playerId"],
-          where: { teamId: team.id, playerId: { in: attendees.map((a) => a.id) } },
-          _count: { _all: true },
-          _max: { date: true }
+      findMany: async (args: { where: { teamId: number; date?: { lt?: string } } }) =>
+        params.prisma.carryLog.findMany({
+          where: {
+            teamId: team.id,
+            ...(args.where.date?.lt ? { date: { lt: args.where.date.lt } } : {})
+          },
+          orderBy: [{ date: "asc" }, { createdAt: "asc" }]
         })
     }
+  }, {
+    teamId: team.id,
+    currentDate: params.date
   });
 
   await params.prisma.carryLog.create({
     data: {
       teamId: team.id,
       date: params.date,
-      playerId: selected.id,
+      playerId: selection.selected.id,
       rawListText: params.rawListText
     }
   });
 
   return {
     ok: true,
-    selectedName: selected.canonicalName,
-    message: renderMessage(selected.canonicalName)
+    selectedName: selection.selected.canonicalName,
+    message: renderMessage(selection.selected.canonicalName),
+    selectionDebug: selection.stats
   };
 }
-
