@@ -1,4 +1,5 @@
 import { parseList } from "./parseList";
+import { normalizeText } from "./normalize";
 
 export type AttendeePlayer = {
   id: number;
@@ -49,6 +50,8 @@ export const DEFAULT_CARRIER_SELECTION_CONFIG: CarrierSelectionConfig = {
   },
   scoreEpsilon: 0.01
 };
+
+const NEVER_CARRY_NORMALIZED_NAMES = new Set(["gordo"]);
 
 export type PlayerPickStat = {
   playerId: number;
@@ -224,13 +227,17 @@ export function evaluateCarrierSelection(
   configOverride?: Partial<CarrierSelectionConfig>,
   rng: () => number = Math.random
 ): PickResult {
-  if (attendees.length === 0) {
-    throw new Error("No hay asistentes para elegir.");
+  const eligibleAttendees = attendees.filter(
+    (player) => !NEVER_CARRY_NORMALIZED_NAMES.has(normalizeText(player.canonicalName))
+  );
+
+  if (eligibleAttendees.length === 0) {
+    throw new Error("No hay asistentes elegibles para elegir.");
   }
 
   const config = mergeConfig(configOverride);
   const orderedHistory = [...history].sort((a, b) => a.date.localeCompare(b.date));
-  const candidates = attendees.map((player) => {
+  const candidates = eligibleAttendees.map((player) => {
     const firstAttendanceIndex = orderedHistory.findIndex((record) =>
       record.attendeeIds.includes(player.id)
     );

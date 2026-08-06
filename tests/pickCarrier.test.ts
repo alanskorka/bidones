@@ -30,6 +30,28 @@ function statById(stats: ReturnType<typeof evaluateCarrierSelection>["stats"], i
 }
 
 describe("evaluateCarrierSelection", () => {
+  it("ignora a Gordo aunque sea el candidato natural", () => {
+    const attendees = [player(1, "Gordo"), player(2, "Beto"), player(3, "Ana")];
+    const history: PracticeHistoryRecord[] = [
+      record("2026-01-01", 2, [1, 2, 3]),
+      record("2026-01-08", 2, [1, 2, 3]),
+      record("2026-01-15", 3, [1, 2, 3])
+    ];
+
+    const result = evaluateCarrierSelection(attendees, history);
+
+    expect(result.selected.canonicalName).not.toBe("Gordo");
+    expect(result.stats.some((stat) => stat.playerId === 1)).toBe(false);
+  });
+
+  it("falla si solo queda Gordo como asistente elegible", () => {
+    const attendees = [player(1, "Gordo")];
+
+    expect(() => evaluateCarrierSelection(attendees, [])).toThrow(
+      "No hay asistentes elegibles para elegir."
+    );
+  });
+
   it("elige al que menos veces llevo cuando todos asistieron igual", () => {
     const attendees = [player(1, "Ana"), player(2, "Beto"), player(3, "Caro")];
     const history: PracticeHistoryRecord[] = [

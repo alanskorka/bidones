@@ -363,6 +363,15 @@ app.post("/api/pick", async (req: Request, res: Response) => {
       selectionDebug: result.selectionDebug
     });
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (message === "No hay asistentes elegibles para elegir.") {
+      res.status(400).json({
+        ok: false,
+        error: message
+      });
+      return;
+    }
+
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2002"
@@ -374,7 +383,6 @@ app.post("/api/pick", async (req: Request, res: Response) => {
       return;
     }
 
-    const message = error instanceof Error ? error.message : String(error);
     res.status(500).json({ ok: false, error: message });
   }
 });
