@@ -273,10 +273,8 @@ export function evaluateCarrierSelection(
             return count;
           })()
         : null;
-    const attendanceWeight = Math.pow(
-      attendanceCount + config.onboardingBase,
-      config.alpha
-    );
+    const effectiveAttendanceCount = attendanceCount + config.onboardingBase;
+    const attendanceWeight = Math.pow(effectiveAttendanceCount, -config.alpha);
 
     const attendanceWeights = new Map<number, number>();
     for (let index = sliceStart; index < orderedHistory.length; index += 1) {
@@ -291,7 +289,7 @@ export function evaluateCarrierSelection(
     const totalRelevantAttendanceWeights = [...attendanceWeights.entries()].reduce(
       (sum, [playerId, count]) =>
         sum +
-        Math.pow(count + config.onboardingBase, config.alpha),
+        Math.pow(count + config.onboardingBase, -config.alpha),
       0
     );
     const expectedCarryCount =

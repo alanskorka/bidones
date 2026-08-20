@@ -116,7 +116,7 @@ describe("evaluateCarrierSelection", () => {
     expect(lowAttendance.finalScore).not.toBeNaN();
   });
 
-  it("favorece en proporcion a quien asiste poco, sin darle mas cargas totales que al que asiste mucho", () => {
+  it("castiga a quien asiste poco y lo vuelve mas probable para llevar", () => {
     const attendees = [player(1, "Ana"), player(2, "Beto")];
     const history: PracticeHistoryRecord[] = [];
 
@@ -131,7 +131,8 @@ describe("evaluateCarrierSelection", () => {
 
     expect(small.attendanceCount).toBe(5);
     expect(big.attendanceCount).toBe(100);
-    expect(small.expectedCarryCount).toBeLessThan(big.expectedCarryCount);
+    expect(small.expectedCarryCount).toBeGreaterThan(big.expectedCarryCount);
+    expect(small.finalScore).toBeGreaterThan(big.finalScore);
     expect(small.expectedCarryCount / small.attendanceCount).toBeGreaterThan(
       big.expectedCarryCount / big.attendanceCount
     );
